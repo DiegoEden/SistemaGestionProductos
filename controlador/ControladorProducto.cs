@@ -1,5 +1,7 @@
-﻿using System;
+﻿using SistemaGestionProductos.modelo;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,7 +26,41 @@ namespace SistemaGestionProductos.controlador
         public decimal Precio { get => precio; set => precio = value; }
         public byte[] Imagen { get => imagen; set => imagen = value; }
 
+        public int AgregarProducto()
+        {
+            return ModeloProductos.AgregarRegistro(this);
+        }
 
+
+        public DataTable ListarProductos()
+        {
+            return ModeloProductos.MostrarRegistros();
+        }
+
+        public DataTable ListarProveedores()
+        {
+            return ModeloProductos.GetProveedores();
+        }
+
+        public DataTable ListarCategorias()
+        {
+            return ModeloProductos.GetCategorias();
+        }
+
+        public bool ActualizarProducto()
+        {
+            return ModeloProductos.ActualizarRegistro(this);
+        }
+
+        public byte[] GetImagenExistente()
+        {
+            return ModeloProductos.ObtenerImagenPorId(Id_producto);
+        }
+
+        public bool EliminarProducto()
+        {
+            return ModeloProductos.EliminarRegistro(this);
+        }
 
     }
 }

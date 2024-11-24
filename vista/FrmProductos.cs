@@ -20,12 +20,12 @@ namespace SistemaGestionProductos.vista
         public FrmProductos()
         {
             InitializeComponent();
-            cboProveedores.DataSource = ModeloProductos.GetProveedores();
+            cboProveedores.DataSource = producto.ListarProveedores();
             cboProveedores.ValueMember = "Id_Proveedor";
             cboProveedores.DisplayMember = "Empresa";
 
 
-            cboCategorias.DataSource = ModeloProductos.GetCategorias();
+            cboCategorias.DataSource = producto.ListarCategorias();
             cboCategorias.ValueMember = "Id_Categoria";
             cboCategorias.DisplayMember = "Nombre_Categoria";
             mostrarDatos();
@@ -61,7 +61,7 @@ namespace SistemaGestionProductos.vista
                 byte[] abyte = ms1.ToArray();
                 producto.Imagen = abyte;
 
-                int datos = ModeloProductos.AgregarRegistro(producto);
+                int datos = producto.AgregarProducto();
 
                 NuevoRegistro();
             }
@@ -70,7 +70,7 @@ namespace SistemaGestionProductos.vista
 
         private void mostrarDatos()
         {
-            dgvDatos.DataSource = ModeloProductos.MostrarRegistros();
+            dgvDatos.DataSource = producto.ListarProductos();
 
 
         }
@@ -155,7 +155,7 @@ namespace SistemaGestionProductos.vista
             }
             else
             {
-                dgvDatos.DataSource = ModeloProductos.MostrarRegistros();
+                dgvDatos.DataSource = producto.ListarProductos();
             }
         }
 
@@ -189,12 +189,12 @@ namespace SistemaGestionProductos.vista
                 }
                 else
                 {
-                    producto.Imagen = ModeloProductos.ObtenerImagenPorId(producto.Id_producto);
+                    producto.Imagen = producto.GetImagenExistente();
                 }
 
 
 
-                bool datos = ModeloProductos.ActualizarRegistro(producto);
+                bool datos = producto.ActualizarProducto();
                 NuevoRegistro();
             }
         }
@@ -206,7 +206,7 @@ namespace SistemaGestionProductos.vista
 
             if (dialaog == DialogResult.Yes)
             {
-                bool datos = ModeloProductos.EliminarRegistro(producto);
+                bool datos = producto.EliminarProducto();
                 NuevoRegistro();
             }
         }
