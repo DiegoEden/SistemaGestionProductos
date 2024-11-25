@@ -218,7 +218,10 @@ END
 
 
 CREATE PROCEDURE GetUsuarios
+	@IdUsuario int
 	AS 
 	BEGIN
 	select Id_Usuario, Nombre, Apellido, Direccion, Usuario, Correo, Fecha_Nacimiento from usuarios
+	where Id_Usuario != @IdUsuario
 END
+
