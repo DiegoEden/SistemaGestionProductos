@@ -61,17 +61,13 @@ namespace SistemaGestionProductos.vista
 
         }
 
-        private void txtContrasenia_TextChanged(object sender, EventArgs e)
-        {
-            byte[] pass = System.Text.Encoding.UTF8.GetBytes(txtContrasenia.Text.ToString());
-            txtCifrado.Text = Hash(pass);
-        }
 
         private void btnIngresar_Click(object sender, EventArgs e)
         {
+            byte[] pass = System.Text.Encoding.UTF8.GetBytes(txtContrasenia.Text.ToString());
+            string password = Hash(pass);
 
-
-            if (txtUsuario.Text.Trim() == "" || txtCifrado.Text.Trim() == "")
+            if (txtUsuario.Text.Trim() == "" || txtContrasenia.Text.Trim() == "")
             {
 
                 MessageBox.Show("Los campos son requeridos", "Campos vacíos", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -79,7 +75,7 @@ namespace SistemaGestionProductos.vista
             else
             {
                 usuario.Usuario = txtUsuario.Text;
-                usuario.Contra = txtCifrado.Text;
+                usuario.Contra = password;
 
                 bool respuesta = usuario.Acceso();
                 if (respuesta == true)

@@ -38,7 +38,6 @@
             this.btnIngresar = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.txtCifrado = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.btnHide = new System.Windows.Forms.Button();
@@ -63,7 +62,7 @@
             this.tlspNav.Name = "tlspNav";
             this.tlspNav.Padding = new System.Windows.Forms.Padding(0);
             this.tlspNav.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.tlspNav.Size = new System.Drawing.Size(982, 27);
+            this.tlspNav.Size = new System.Drawing.Size(982, 31);
             this.tlspNav.TabIndex = 0;
             this.tlspNav.Text = "Iniciar sesión";
             this.tlspNav.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tlspNav_MouseDown);
@@ -72,7 +71,7 @@
             // 
             this.toolStripLabel1.ForeColor = System.Drawing.Color.White;
             this.toolStripLabel1.Name = "toolStripLabel1";
-            this.toolStripLabel1.Size = new System.Drawing.Size(102, 24);
+            this.toolStripLabel1.Size = new System.Drawing.Size(102, 28);
             this.toolStripLabel1.Text = "Iniciar sesión";
             // 
             // tsbSalir
@@ -82,7 +81,7 @@
             this.tsbSalir.Image = global::SistemaGestionProductos.Properties.Resources.close;
             this.tsbSalir.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbSalir.Name = "tsbSalir";
-            this.tsbSalir.Size = new System.Drawing.Size(29, 24);
+            this.tsbSalir.Size = new System.Drawing.Size(29, 28);
             this.tsbSalir.Text = "Salir";
             this.tsbSalir.Click += new System.EventHandler(this.tsbSalir_Click);
             // 
@@ -93,7 +92,7 @@
             this.tsbMinimizar.Image = global::SistemaGestionProductos.Properties.Resources.minimize;
             this.tsbMinimizar.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbMinimizar.Name = "tsbMinimizar";
-            this.tsbMinimizar.Size = new System.Drawing.Size(29, 24);
+            this.tsbMinimizar.Size = new System.Drawing.Size(29, 28);
             this.tsbMinimizar.Text = "Minimizar";
             this.tsbMinimizar.Click += new System.EventHandler(this.tsbMinimizar_Click);
             // 
@@ -119,7 +118,6 @@
             this.txtContrasenia.PasswordChar = '*';
             this.txtContrasenia.Size = new System.Drawing.Size(297, 30);
             this.txtContrasenia.TabIndex = 2;
-            this.txtContrasenia.TextChanged += new System.EventHandler(this.txtContrasenia_TextChanged);
             // 
             // btnIngresar
             // 
@@ -157,18 +155,6 @@
             this.label2.Size = new System.Drawing.Size(114, 21);
             this.label2.TabIndex = 5;
             this.label2.Text = "Contraseña";
-            // 
-            // txtCifrado
-            // 
-            this.txtCifrado.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(30)))), ((int)(((byte)(28)))));
-            this.txtCifrado.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtCifrado.Font = new System.Drawing.Font("Century Gothic", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtCifrado.ForeColor = System.Drawing.Color.White;
-            this.txtCifrado.Location = new System.Drawing.Point(445, 506);
-            this.txtCifrado.Name = "txtCifrado";
-            this.txtCifrado.Size = new System.Drawing.Size(301, 30);
-            this.txtCifrado.TabIndex = 7;
-            this.txtCifrado.Visible = false;
             // 
             // panel1
             // 
@@ -224,7 +210,6 @@
             this.Controls.Add(this.btnShow);
             this.Controls.Add(this.btnHide);
             this.Controls.Add(this.panel1);
-            this.Controls.Add(this.txtCifrado);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnIngresar);
@@ -258,7 +243,6 @@
         private System.Windows.Forms.Button btnIngresar;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox txtCifrado;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Button btnHide;
