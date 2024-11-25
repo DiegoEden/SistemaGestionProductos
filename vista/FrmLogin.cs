@@ -19,6 +19,7 @@ namespace SistemaGestionProductos.vista
     public partial class FrmLogin : Form
     {
         ControladorUsuario usuario =  new ControladorUsuario();
+        Validaciones Validaciones = new Validaciones();
         string Hash(byte[] val)
         {
             using (SHA1Managed sha1 = new SHA1Managed())
@@ -65,7 +66,6 @@ namespace SistemaGestionProductos.vista
         private void btnIngresar_Click(object sender, EventArgs e)
         {
             byte[] pass = System.Text.Encoding.UTF8.GetBytes(txtContrasenia.Text.ToString());
-            string password = Hash(pass);
 
             if (txtUsuario.Text.Trim() == "" || txtContrasenia.Text.Trim() == "")
             {
@@ -75,7 +75,7 @@ namespace SistemaGestionProductos.vista
             else
             {
                 usuario.Usuario = txtUsuario.Text;
-                usuario.Contra = password;
+                usuario.Contra = Hash(pass);
 
                 bool respuesta = usuario.Acceso();
                 if (respuesta == true)
@@ -119,6 +119,13 @@ namespace SistemaGestionProductos.vista
         private void FrmLogin_FormClosing(object sender, FormClosingEventArgs e)
         {
             Application.Exit();
+        }
+
+        private void txtUsuario_KeyPress(object sender, KeyPressEventArgs e)
+        {
+
+            Validaciones.ValidarUsername(e);
+            Validaciones.SetLongitudValores(sender, e, 50);
         }
     }
 }

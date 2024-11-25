@@ -86,6 +86,7 @@
             this.txtBuscar.Name = "txtBuscar";
             this.txtBuscar.Size = new System.Drawing.Size(651, 30);
             this.txtBuscar.TabIndex = 37;
+            this.txtBuscar.TextChanged += new System.EventHandler(this.txtBuscar_TextChanged);
             // 
             // dgvDatos
             // 
@@ -222,6 +223,7 @@
             this.txtMail.Name = "txtMail";
             this.txtMail.Size = new System.Drawing.Size(346, 30);
             this.txtMail.TabIndex = 5;
+            this.txtMail.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtMail_KeyPress);
             // 
             // txtDireccion
             // 
@@ -236,6 +238,7 @@
             this.txtDireccion.Size = new System.Drawing.Size(346, 96);
             this.txtDireccion.TabIndex = 3;
             this.txtDireccion.Text = "";
+            this.txtDireccion.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtDireccion_KeyPress);
             // 
             // label3
             // 
@@ -258,6 +261,7 @@
             this.txtUsuario.Name = "txtUsuario";
             this.txtUsuario.Size = new System.Drawing.Size(346, 30);
             this.txtUsuario.TabIndex = 4;
+            this.txtUsuario.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtUsuario_KeyPress);
             // 
             // label1
             // 
@@ -280,6 +284,7 @@
             this.txtNombre.Name = "txtNombre";
             this.txtNombre.Size = new System.Drawing.Size(346, 30);
             this.txtNombre.TabIndex = 1;
+            this.txtNombre.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtNombre_KeyPress);
             // 
             // dtpNacimiento
             // 
@@ -313,6 +318,7 @@
             this.txtApellido.Name = "txtApellido";
             this.txtApellido.Size = new System.Drawing.Size(346, 30);
             this.txtApellido.TabIndex = 2;
+            this.txtApellido.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtApellido_KeyPress);
             // 
             // FrmUsuarios
             // 

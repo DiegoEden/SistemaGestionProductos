@@ -17,6 +17,7 @@ namespace SistemaGestionProductos.vista
     public partial class FrmProveedores : Form
     {
         ControladorProveedor proveedor =  new ControladorProveedor();
+        Validaciones Validaciones = new Validaciones();
         public FrmProveedores()
         {
             InitializeComponent();
@@ -125,7 +126,6 @@ namespace SistemaGestionProductos.vista
 
         private void btnActualizar_Click(object sender, EventArgs e)
         {
-            string pattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
 
 
             if (txtEmpresa.Text.Trim() == "" || txtMail.Text.Trim() == "" || txtDireccion.Text.Trim() == "" || mskTel.Text.Trim() == "")
@@ -133,7 +133,7 @@ namespace SistemaGestionProductos.vista
                 MessageBox.Show("Los campos son requeridos", "Campos vacíos", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
             }
-            else if (!Regex.IsMatch(txtMail.Text, pattern))
+            else if (Validaciones.ValidarCorreo(txtMail.Text) == false)
             {
 
                 MessageBox.Show("El formato del correo electrónico no es válido.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -168,6 +168,24 @@ namespace SistemaGestionProductos.vista
 
         private void txtMail_TextChanged(object sender, EventArgs e)
         {
+
+        }
+
+        private void txtEmpresa_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            Validaciones.ValidarTextoLargo(e);
+            Validaciones.SetLongitudValores(sender, e, 50);
+
+        }
+
+        private void txtDireccion_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            Validaciones.ValidarTextoLargo(e);
+        }
+
+        private void txtMail_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            Validaciones.SetLongitudValores(sender, e, 50);
 
         }
     }

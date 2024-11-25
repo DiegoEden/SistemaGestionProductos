@@ -16,6 +16,7 @@ namespace SistemaGestionProductos.vista
     public partial class FrmPerfil : Form
     {
         ControladorUsuario controlador = new ControladorUsuario();
+        Validaciones Validaciones = new Validaciones();
         public FrmPerfil()
         {
             InitializeComponent();
@@ -42,7 +43,6 @@ namespace SistemaGestionProductos.vista
 
         private void btnGuardar_Click(object sender, EventArgs e)
         {
-            string pattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
 
             if (string.IsNullOrWhiteSpace(txtNombre.Text) ||
                 string.IsNullOrWhiteSpace(txtApellido.Text) ||
@@ -52,13 +52,13 @@ namespace SistemaGestionProductos.vista
             {
                 MessageBox.Show("Todos los campos deben estar llenos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            else if (!Regex.IsMatch(txtMail.Text, pattern))
+            else if (Validaciones.ValidarCorreo(txtMail.Text) == false)
             {
 
                 MessageBox.Show("El formato del correo electrónico no es válido.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 txtMail.Focus();
             }
-            else if (!EsMayorDeEdad(dtpNacimiento.Value))
+            else if (!Validaciones.EsMayorDeEdad(dtpNacimiento.Value))
             {
                 MessageBox.Show("El usuario debe ser mayor de 18 años.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
@@ -87,6 +87,16 @@ namespace SistemaGestionProductos.vista
 
                         }
                     }
+
+                    VariablesGlobales.Apellido = txtApellido.Text ;
+                    VariablesGlobales.Nombre = txtNombre.Text ;
+                    VariablesGlobales.Correo = txtMail.Text;
+                    VariablesGlobales.Usuario = txtUsuario.Text;
+                    txtId.Text = VariablesGlobales.UsuarioID.ToString();
+                    VariablesGlobales.Direccion = txtDireccion.Text;
+                    VariablesGlobales.FechaNac = dtpNacimiento.Value;
+                    string mensaje = "Hola, " + VariablesGlobales.Nombre + " " + VariablesGlobales.Apellido ;
+                    lblNombre.Text = mensaje ;
                 }
 
                
@@ -99,17 +109,35 @@ namespace SistemaGestionProductos.vista
 
         
 
-        private bool EsMayorDeEdad(DateTime fechaNacimiento)
+       
+
+        private void txtUsuario_KeyPress(object sender, KeyPressEventArgs e)
         {
-            DateTime hoy = DateTime.Today;
-            int edad = hoy.Year - fechaNacimiento.Year;
 
-            if (fechaNacimiento > hoy.AddYears(-edad))
-            {
-                edad--;
-            }
+            Validaciones.ValidarUsername(e);
+            Validaciones.SetLongitudValores(sender, e, 50);
 
-            return edad >= 18;
+        }
+
+        private void txtNombre_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            Validaciones.SoloLetras(e);
+            Validaciones.SetLongitudValores(sender, e, 50);
+
+        }
+
+        private void txtApellido_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            Validaciones.SoloLetras(e);
+            Validaciones.SetLongitudValores(sender, e, 50);
+
+        }
+
+        private void txtDireccion_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            Validaciones.ValidarTextoLargo(e);
+            Validaciones.SetLongitudValores(sender, e, 255);
+
         }
     }
 }

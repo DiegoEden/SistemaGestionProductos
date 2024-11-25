@@ -51,6 +51,7 @@
     <Compile Include="controlador\ControladorProducto.cs" />
     <Compile Include="controlador\ControladorProveedor.cs" />
     <Compile Include="controlador\ControladorUsuario.cs" />
+    <Compile Include="controlador\Validaciones.cs" />
     <Compile Include="controlador\VariablesGlobales.cs" />
     <Compile Include="modelo\ModeloCategorias.cs" />
     <Compile Include="modelo\ModeloProductos.cs" />

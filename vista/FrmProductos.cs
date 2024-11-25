@@ -17,6 +17,7 @@ namespace SistemaGestionProductos.vista
     public partial class FrmProductos : Form
     {
         ControladorProducto producto = new ControladorProducto();
+        Validaciones Validaciones = new Validaciones();
         public FrmProductos()
         {
             InitializeComponent();
@@ -213,33 +214,14 @@ namespace SistemaGestionProductos.vista
 
         private void txtStock_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
-            {
-                e.Handled = true;
-            }
+
+            Validaciones.SoloNumeros(e);
+            Validaciones.LimiteCantidad(sender, e);
         }
 
         private void txtPrecio_KeyPress(object sender, KeyPressEventArgs e)
         {
-            TextBox textBox = sender as TextBox;
-
-            // Permitir números, un solo punto decimal y la tecla de retroceso
-            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && e.KeyChar != '.')
-            {
-                e.Handled = true; // Bloquear la tecla
-            }
-
-            // Permitir solo un punto decimal
-            if (e.KeyChar == '.' && textBox.Text.Contains("."))
-            {
-                e.Handled = true;
-            }
-
-            // Validar que solo haya dos decimales
-            if (textBox.Text.Contains(".") && textBox.Text.Split('.')[1].Length >= 2 && !char.IsControl(e.KeyChar))
-            {
-                e.Handled = true;
-            }
+            Validaciones.ValidarDecimales(sender, e);
         }
 
         public Image ByteToImage(byte[] data)
@@ -267,6 +249,18 @@ namespace SistemaGestionProductos.vista
 
                 throw;
             }
+        }
+
+        private void txtNombre_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            Validaciones.ValidarTextoLargo(e);
+            Validaciones.SetLongitudValores(sender, e, 50);
+
+        }
+
+        private void txtDesc_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            Validaciones.ValidarTextoLargo(e);
         }
     }
 }

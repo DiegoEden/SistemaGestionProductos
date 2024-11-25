@@ -18,6 +18,7 @@ namespace SistemaGestionProductos.vista
     public partial class FrmUsuarios : Form
     {
         ControladorUsuario usuario = new ControladorUsuario();
+        Validaciones Validaciones = new Validaciones();
         public FrmUsuarios()
         {
             InitializeComponent();
@@ -30,7 +31,6 @@ namespace SistemaGestionProductos.vista
 
         private void btnIngresar_Click(object sender, EventArgs e)
         {
-            string pattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
 
             if (string.IsNullOrWhiteSpace(txtNombre.Text) ||
               string.IsNullOrWhiteSpace(txtApellido.Text) ||
@@ -40,13 +40,13 @@ namespace SistemaGestionProductos.vista
             {
                 MessageBox.Show("Todos los campos deben estar llenos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            else if (!Regex.IsMatch(txtMail.Text, pattern))
+            else if (Validaciones.ValidarCorreo(txtMail.Text) == false)
             {
 
                 MessageBox.Show("El formato del correo electrónico no es válido.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 txtMail.Focus();
             }
-            else if (!EsMayorDeEdad(dtpNacimiento.Value))
+            else if (!Validaciones.EsMayorDeEdad(dtpNacimiento.Value))
             {
                 MessageBox.Show("El usuario debe ser mayor de 18 años.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
@@ -92,6 +92,7 @@ namespace SistemaGestionProductos.vista
             txtMail.Clear();    
             txtUsuario.Clear();
             txtId.Clear();
+            dtpNacimiento.Value = DateTime.Now; 
             btnActualizar.Enabled = false;
             btnEliminar.Enabled = false;
             btnIngresar.Enabled = true;
@@ -113,21 +114,7 @@ namespace SistemaGestionProductos.vista
 
 
         }
-        private bool EsMayorDeEdad(DateTime fechaNacimiento)
-        {
-            DateTime hoy = DateTime.Today;
-            int edad = hoy.Year - fechaNacimiento.Year;
-
-            if (fechaNacimiento > hoy.AddYears(-edad))
-            {
-                edad--;
-            }
-
-            return edad >= 18;
-        }
-
-        
-
+ 
         private void dgvDatos_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             int posicion = this.dgvDatos.CurrentRow.Index;
@@ -146,7 +133,6 @@ namespace SistemaGestionProductos.vista
 
         private void btnActualizar_Click(object sender, EventArgs e)
         {
-            string pattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
 
             if (string.IsNullOrWhiteSpace(txtNombre.Text) ||
               string.IsNullOrWhiteSpace(txtApellido.Text) ||
@@ -156,13 +142,13 @@ namespace SistemaGestionProductos.vista
             {
                 MessageBox.Show("Todos los campos deben estar llenos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            else if (!Regex.IsMatch(txtMail.Text, pattern))
+            else if (Validaciones.ValidarCorreo(txtMail.Text) == false)
             {
 
                 MessageBox.Show("El formato del correo electrónico no es válido.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 txtMail.Focus();
             }
-            else if (!EsMayorDeEdad(dtpNacimiento.Value))
+            else if (!Validaciones.EsMayorDeEdad(dtpNacimiento.Value))
             {
                 MessageBox.Show("El usuario debe ser mayor de 18 años.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
@@ -203,6 +189,67 @@ namespace SistemaGestionProductos.vista
         private void btnNuevo_Click(object sender, EventArgs e)
         {
             NuevoRegistro();
+        }
+
+        private void txtBuscar_TextChanged(object sender, EventArgs e)
+        {
+            if (txtBuscar.Text != "")
+            {
+                dgvDatos.CurrentCell = null;
+                foreach (DataGridViewRow r in dgvDatos.Rows)
+                {
+                    r.Visible = false;
+                }
+                foreach (DataGridViewRow r in dgvDatos.Rows)
+                {
+                    foreach (DataGridViewCell c in r.Cells)
+                    {
+                        if ((c.Value.ToString().ToUpper()).IndexOf(txtBuscar.Text.ToUpper()) == 0)
+                        {
+                            r.Visible = true;
+                            break;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                dgvDatos.DataSource = usuario.ListarUsuarios();
+            }
+        }
+
+        private void txtNombre_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            Validaciones.SoloLetras(e);
+            Validaciones.SetLongitudValores(sender, e, 50);
+
+        }
+
+        private void txtApellido_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            Validaciones.SoloLetras(e);
+            Validaciones.SetLongitudValores(sender, e, 50);
+
+
+        }
+
+        private void txtDireccion_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            Validaciones.ValidarTextoLargo(e);
+
+        }
+
+        private void txtUsuario_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            Validaciones.ValidarUsername(e);
+            Validaciones.SetLongitudValores(sender, e, 50);
+
+        }
+
+        private void txtMail_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            Validaciones.SetLongitudValores(sender, e, 50);
+
         }
     }
 }

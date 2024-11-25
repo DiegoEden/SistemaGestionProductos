@@ -194,6 +194,7 @@
             this.txtDireccion.Size = new System.Drawing.Size(262, 96);
             this.txtDireccion.TabIndex = 29;
             this.txtDireccion.Text = "";
+            this.txtDireccion.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtDireccion_KeyPress);
             // 
             // label3
             // 
@@ -217,6 +218,7 @@
             this.txtMail.Size = new System.Drawing.Size(243, 30);
             this.txtMail.TabIndex = 27;
             this.txtMail.TextChanged += new System.EventHandler(this.txtMail_TextChanged);
+            this.txtMail.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtMail_KeyPress);
             // 
             // label1
             // 
@@ -239,6 +241,7 @@
             this.txtEmpresa.Name = "txtEmpresa";
             this.txtEmpresa.Size = new System.Drawing.Size(262, 30);
             this.txtEmpresa.TabIndex = 25;
+            this.txtEmpresa.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtEmpresa_KeyPress);
             // 
             // mskTel
             // 

@@ -67,6 +67,7 @@
             this.txtApellido.Name = "txtApellido";
             this.txtApellido.Size = new System.Drawing.Size(342, 30);
             this.txtApellido.TabIndex = 58;
+            this.txtApellido.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtApellido_KeyPress);
             // 
             // dtpNacimiento
             // 
@@ -163,6 +164,7 @@
             this.txtDireccion.Size = new System.Drawing.Size(342, 96);
             this.txtDireccion.TabIndex = 50;
             this.txtDireccion.Text = "";
+            this.txtDireccion.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtDireccion_KeyPress);
             // 
             // label3
             // 
@@ -185,6 +187,7 @@
             this.txtUsuario.Name = "txtUsuario";
             this.txtUsuario.Size = new System.Drawing.Size(341, 30);
             this.txtUsuario.TabIndex = 48;
+            this.txtUsuario.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtUsuario_KeyPress);
             // 
             // label1
             // 
@@ -207,6 +210,7 @@
             this.txtNombre.Name = "txtNombre";
             this.txtNombre.Size = new System.Drawing.Size(342, 30);
             this.txtNombre.TabIndex = 46;
+            this.txtNombre.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtNombre_KeyPress);
             // 
             // lblNombre
             // 

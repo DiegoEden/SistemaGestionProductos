@@ -68,6 +68,7 @@
             this.txtNombre.Name = "txtNombre";
             this.txtNombre.Size = new System.Drawing.Size(262, 30);
             this.txtNombre.TabIndex = 2;
+            this.txtNombre.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtNombre_KeyPress);
             // 
             // label1
             // 
@@ -116,6 +117,7 @@
             this.txtDesc.Size = new System.Drawing.Size(262, 96);
             this.txtDesc.TabIndex = 3;
             this.txtDesc.Text = "";
+            this.txtDesc.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtDesc_KeyPress);
             // 
             // label4
             // 
@@ -357,7 +359,7 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
-            // frmProductos
+            // FrmProductos
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -384,7 +386,7 @@
             this.Controls.Add(this.txtNombre);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "frmProductos";
+            this.Name = "FrmProductos";
             this.Text = "frmProductos";
             this.Load += new System.EventHandler(this.frmProductos_Load);
             this.groupBox1.ResumeLayout(false);

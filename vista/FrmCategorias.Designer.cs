@@ -194,6 +194,7 @@
             this.txtNombre.Name = "txtNombre";
             this.txtNombre.Size = new System.Drawing.Size(243, 30);
             this.txtNombre.TabIndex = 26;
+            this.txtNombre.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtNombre_KeyPress);
             // 
             // txtDesc
             // 
@@ -208,6 +209,7 @@
             this.txtDesc.Size = new System.Drawing.Size(222, 96);
             this.txtDesc.TabIndex = 27;
             this.txtDesc.Text = "";
+            this.txtDesc.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtDesc_KeyPress);
             // 
             // label3
             // 
@@ -220,7 +222,7 @@
             this.label3.TabIndex = 25;
             this.label3.Text = "Descripción";
             // 
-            // frmCategorias
+            // FrmCategorias
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -237,7 +239,7 @@
             this.Controls.Add(this.label3);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "frmCategorias";
+            this.Name = "FrmCategorias";
             this.Text = "frmCategorias";
             ((System.ComponentModel.ISupportInitialize)(this.dgvDatos)).EndInit();
             this.groupBox1.ResumeLayout(false);

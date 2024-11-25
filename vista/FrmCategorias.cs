@@ -17,6 +17,7 @@ namespace SistemaGestionProductos.vista
     {
 
         ControladorCategoria categoria = new ControladorCategoria();
+        Validaciones Validaciones = new Validaciones();
 
         public FrmCategorias()
         {
@@ -146,6 +147,18 @@ namespace SistemaGestionProductos.vista
             {
                 dgvDatos.DataSource = categoria.ListarCategorias();
             }
+        }
+
+        private void txtNombre_KeyPress(object sender, KeyPressEventArgs e)
+        {
+
+            Validaciones.SoloLetras(e);
+            Validaciones.SetLongitudValores(sender, e, 50);
+        }
+
+        private void txtDesc_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            Validaciones.ValidarTextoLargo(e);
         }
     }
 }

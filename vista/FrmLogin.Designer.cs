@@ -62,7 +62,7 @@
             this.tlspNav.Name = "tlspNav";
             this.tlspNav.Padding = new System.Windows.Forms.Padding(0);
             this.tlspNav.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.tlspNav.Size = new System.Drawing.Size(982, 31);
+            this.tlspNav.Size = new System.Drawing.Size(982, 27);
             this.tlspNav.TabIndex = 0;
             this.tlspNav.Text = "Iniciar sesión";
             this.tlspNav.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tlspNav_MouseDown);
@@ -71,7 +71,7 @@
             // 
             this.toolStripLabel1.ForeColor = System.Drawing.Color.White;
             this.toolStripLabel1.Name = "toolStripLabel1";
-            this.toolStripLabel1.Size = new System.Drawing.Size(102, 28);
+            this.toolStripLabel1.Size = new System.Drawing.Size(102, 24);
             this.toolStripLabel1.Text = "Iniciar sesión";
             // 
             // tsbSalir
@@ -81,7 +81,7 @@
             this.tsbSalir.Image = global::SistemaGestionProductos.Properties.Resources.close;
             this.tsbSalir.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbSalir.Name = "tsbSalir";
-            this.tsbSalir.Size = new System.Drawing.Size(29, 28);
+            this.tsbSalir.Size = new System.Drawing.Size(29, 24);
             this.tsbSalir.Text = "Salir";
             this.tsbSalir.Click += new System.EventHandler(this.tsbSalir_Click);
             // 
@@ -92,7 +92,7 @@
             this.tsbMinimizar.Image = global::SistemaGestionProductos.Properties.Resources.minimize;
             this.tsbMinimizar.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbMinimizar.Name = "tsbMinimizar";
-            this.tsbMinimizar.Size = new System.Drawing.Size(29, 28);
+            this.tsbMinimizar.Size = new System.Drawing.Size(29, 24);
             this.tsbMinimizar.Text = "Minimizar";
             this.tsbMinimizar.Click += new System.EventHandler(this.tsbMinimizar_Click);
             // 
@@ -106,6 +106,7 @@
             this.txtUsuario.Name = "txtUsuario";
             this.txtUsuario.Size = new System.Drawing.Size(301, 30);
             this.txtUsuario.TabIndex = 1;
+            this.txtUsuario.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtUsuario_KeyPress);
             // 
             // txtContrasenia
             // 

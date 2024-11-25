@@ -177,7 +177,7 @@ namespace SistemaGestionProductos.modelo
             }
         }
 
-        public static byte[] ObtenerImagenPorId(int idProducto)
+        public static byte[] ObtenerImagenPorId(int id_producto)
         {
             byte[] imagen = null;
 
@@ -187,7 +187,7 @@ namespace SistemaGestionProductos.modelo
                 {
                     using (SqlCommand cmd = new SqlCommand("SELECT Imagen FROM Productos WHERE IdProducto = @IdProducto", connection))
                     {
-                        cmd.Parameters.AddWithValue("@IdProducto", idProducto);
+                        cmd.Parameters.AddWithValue("@IdProducto", id_producto);
 
                         connection.Open();
                         var result = cmd.ExecuteScalar();
