@@ -81,7 +81,7 @@ namespace SistemaGestionProductos.vista
                 usuario.Usuario = txtUsuario.Text;
                 usuario.Contra = txtCifrado.Text;
 
-                bool respuesta = ModeloUsuarios.Acceso(usuario);
+                bool respuesta = usuario.Acceso();
                 if (respuesta == true)
                 {
                     VariablesGlobales.UsuarioID = usuario.Id_usuario;

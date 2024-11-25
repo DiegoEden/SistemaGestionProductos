@@ -216,6 +216,9 @@ CREATE PROCEDURE AgregarUsuario
 	INSERT INTO usuarios VALUES(@Nombre, @Apellido, @Direccion, @Usuario, @Contra, @Correo, @FechaNac)
 END
 
-drop procedure AgregarUsuario
 
-SELECT * FROM usuarios
+CREATE PROCEDURE GetUsuarios
+	AS 
+	BEGIN
+	select Id_Usuario, Nombre, Apellido, Direccion, Usuario, Correo, Fecha_Nacimiento from usuarios
+END

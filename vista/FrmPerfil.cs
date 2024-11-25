@@ -71,7 +71,7 @@ namespace SistemaGestionProductos.vista
                 controlador.Correo = txtMail.Text.Trim();
                 controlador.Fecha_nacimiento = dtpNacimiento.Value;
                 controlador.Id_usuario = VariablesGlobales.UsuarioID;
-                bool datos = ModeloUsuarios.ActualizarPerfil(controlador);
+                bool datos = controlador.ActualizarUsuario();
 
                 if(txtUsuario.Text.Trim() != VariablesGlobales.Usuario)
                 {

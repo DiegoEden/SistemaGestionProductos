@@ -20,6 +20,7 @@ namespace SistemaGestionProductos.vista
         public FrmUsuarios()
         {
             InitializeComponent();
+            mostrarDatos();
         }
 
         private void btnIngresar_Click(object sender, EventArgs e)
@@ -56,7 +57,7 @@ namespace SistemaGestionProductos.vista
                 byte[] pass = System.Text.Encoding.UTF8.GetBytes(getPass());
                 usuario.Contra = Hash(pass);
 
-                int datos =  ModeloUsuarios.AgregarRegistro(usuario);
+                int datos =  usuario.AgregarUsuario();
 
                 MessageBox.Show("El nombre de usuario es " +
                     txtUsuario.Text + " y la contraseña es "+getPass(),"Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -82,7 +83,12 @@ namespace SistemaGestionProductos.vista
             }
         }
 
+        private void mostrarDatos()
+        {
+            dgvDatos.DataSource = usuario.ListarUsuarios();
 
+
+        }
         private bool EsMayorDeEdad(DateTime fechaNacimiento)
         {
             DateTime hoy = DateTime.Today;

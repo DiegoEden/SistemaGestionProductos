@@ -1,5 +1,7 @@
-﻿using System;
+﻿using SistemaGestionProductos.modelo;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,6 +24,26 @@ namespace SistemaGestionProductos.controlador
         public string Correo { get => correo; set => correo = value; }
         public DateTime Fecha_nacimiento { get => fecha_nacimiento; set => fecha_nacimiento = value; }
 
+
+        public bool Acceso()
+        {
+            return ModeloUsuarios.Acceso(this);
+        }
+
+        public int AgregarUsuario()
+        {
+            return ModeloUsuarios.AgregarRegistro(this);
+        }
+
+        public bool ActualizarUsuario()
+        {
+            return ModeloUsuarios.ActualizarPerfil(this);
+        }
+
+        public DataTable ListarUsuarios()
+        {
+            return ModeloUsuarios.MostrarRegistros();
+        }
 
     }
 }

@@ -170,10 +170,13 @@ namespace SistemaGestionProductos.modelo
             DataTable data;
             try
             {
-                string query = "SELECT * FROM  categorias";
-                SqlCommand cmdselect = new SqlCommand(string.Format(query), Conexion.GetConnection());
-                SqlDataAdapter adapter = new SqlDataAdapter(cmdselect);
+                SqlCommand cmd = new SqlCommand("GetUsuarios", Conexion.GetConnection());
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@IdUsuario", VariablesGlobales.UsuarioID);
+
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
                 data = new DataTable();
+
 
                 adapter.Fill(data);
                 return data;
