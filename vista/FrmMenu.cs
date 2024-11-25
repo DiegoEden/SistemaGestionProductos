@@ -142,5 +142,10 @@ namespace SistemaGestionProductos.vista
             AbrirFormulario<FrmPerfil>();
 
         }
+
+        private void FrmMenu_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Application.Exit(); 
+        }
     }
 }

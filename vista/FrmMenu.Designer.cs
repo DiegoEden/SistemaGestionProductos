@@ -248,6 +248,7 @@
             this.Name = "FrmMenu";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Menú principal";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmMenu_FormClosing);
             this.Load += new System.EventHandler(this.FrmMenu_Load);
             this.tlspNav.ResumeLayout(false);
             this.tlspNav.PerformLayout();

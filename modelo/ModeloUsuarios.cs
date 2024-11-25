@@ -91,29 +91,47 @@ namespace SistemaGestionProductos.modelo
 
             try
             {
-                SqlCommand cmdadd = new SqlCommand("AgregarUsuario", Conexion.GetConnection());
-                cmdadd.CommandType = CommandType.StoredProcedure;
 
-                cmdadd.Parameters.AddWithValue("@Nombre", add.Nombre);
-                cmdadd.Parameters.AddWithValue("@Apellido", add.Apellido);
-                cmdadd.Parameters.AddWithValue("@Direccion", add.Direccion);
-                cmdadd.Parameters.AddWithValue("@Usuario", add.Usuario);
-                cmdadd.Parameters.AddWithValue("@Contra", add.Contra);
-                cmdadd.Parameters.AddWithValue("@Correo", add.Correo);
-                cmdadd.Parameters.AddWithValue("@FechaNac", add.Fecha_nacimiento);
+                SqlCommand check = new SqlCommand("CheckUsername", Conexion.GetConnection());
+                check.CommandType = CommandType.StoredProcedure;
+                check.Parameters.AddWithValue("@Usuario", add.Usuario);
+                retorno = Convert.ToInt32(check.ExecuteScalar());   
 
+                if (retorno >= 1){
 
-                retorno = Convert.ToInt32(cmdadd.ExecuteNonQuery());
-
-                if (retorno >= 1)
-                {
-                    MessageBox.Show("Usuario ingresada correctamente", "Completado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Este nombre de usuario ya existe en nuestros registros", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    retorno = 1;
                 }
                 else
                 {
-                    MessageBox.Show("Usuario no ingresada", "No completado", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                    SqlCommand cmdadd = new SqlCommand("AgregarUsuario", Conexion.GetConnection());
+                    cmdadd.CommandType = CommandType.StoredProcedure;
+
+                    cmdadd.Parameters.AddWithValue("@Nombre", add.Nombre);
+                    cmdadd.Parameters.AddWithValue("@Apellido", add.Apellido);
+                    cmdadd.Parameters.AddWithValue("@Direccion", add.Direccion);
+                    cmdadd.Parameters.AddWithValue("@Usuario", add.Usuario);
+                    cmdadd.Parameters.AddWithValue("@Contra", add.Contra);
+                    cmdadd.Parameters.AddWithValue("@Correo", add.Correo);
+                    cmdadd.Parameters.AddWithValue("@FechaNac", add.Fecha_nacimiento);
+
+
+                    retorno = Convert.ToInt32(cmdadd.ExecuteNonQuery());
+
+                    if (retorno >= 1)
+                    {
+                        MessageBox.Show("Usuario ingresado correctamente", "Completado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        retorno = 2;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Usuario no ingresada", "No completado", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
+
                 return retorno;
+
             }
             catch (Exception e)
             {
@@ -127,15 +145,66 @@ namespace SistemaGestionProductos.modelo
             bool retorno = false;
             try
             {
-                SqlCommand cmdupdate = new SqlCommand("ActualizarUsuario", Conexion.GetConnection());
-                cmdupdate.CommandType = CommandType.StoredProcedure;
 
-                cmdupdate.Parameters.AddWithValue("@Nombre", upd.Nombre);
-                cmdupdate.Parameters.AddWithValue("@Apellido", upd.Apellido);
-                cmdupdate.Parameters.AddWithValue("@Direccion",  upd.Direccion);
-                cmdupdate.Parameters.AddWithValue("@Usuario",upd.Usuario);
-                cmdupdate.Parameters.AddWithValue("@Correo", upd.Correo);
-                cmdupdate.Parameters.AddWithValue("@FechaNac", upd.Fecha_nacimiento);
+                SqlCommand check = new SqlCommand("CheckUsername", Conexion.GetConnection());
+                check.CommandType = CommandType.StoredProcedure;
+                check.Parameters.AddWithValue("@Usuario", upd.Usuario);
+                check.Parameters.AddWithValue("@IdUsuario", upd.Id_usuario);
+                retorno = Convert.ToBoolean(check.ExecuteScalar());
+
+                if (retorno == true)
+                {
+
+                    MessageBox.Show("Este nombre de usuario ya existe en nuestros registros", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    retorno = false;
+                }
+
+                else
+                {
+                    SqlCommand cmdupdate = new SqlCommand("ActualizarUsuario", Conexion.GetConnection());
+                    cmdupdate.CommandType = CommandType.StoredProcedure;
+
+                    cmdupdate.Parameters.AddWithValue("@Nombre", upd.Nombre);
+                    cmdupdate.Parameters.AddWithValue("@Apellido", upd.Apellido);
+                    cmdupdate.Parameters.AddWithValue("@Direccion", upd.Direccion);
+                    cmdupdate.Parameters.AddWithValue("@Usuario", upd.Usuario);
+                    cmdupdate.Parameters.AddWithValue("@Correo", upd.Correo);
+                    cmdupdate.Parameters.AddWithValue("@FechaNac", upd.Fecha_nacimiento);
+                    cmdupdate.Parameters.AddWithValue("@IdUsuario", upd.Id_usuario);
+
+
+
+                    retorno = Convert.ToBoolean(cmdupdate.ExecuteNonQuery());
+                    if (retorno == true)
+                    {
+                        MessageBox.Show("Datos actualizados correctamente", "Completado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        retorno = true;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Datos no actualizados", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                    }
+                }
+                return retorno;
+
+
+
+            }
+            catch (Exception e)
+            {
+
+                MessageBox.Show("Ha ocurrido un problema" + e, "Error critico", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return retorno;
+            }
+        }
+        public static bool EliminarUsuario(ControladorUsuario upd)
+        {
+            bool retorno = false;
+            try
+            {
+                SqlCommand cmdupdate = new SqlCommand("EliminarUsuario", Conexion.GetConnection());
+                cmdupdate.CommandType = CommandType.StoredProcedure;
                 cmdupdate.Parameters.AddWithValue("@IdUsuario", upd.Id_usuario);
 
 
@@ -143,12 +212,12 @@ namespace SistemaGestionProductos.modelo
                 retorno = Convert.ToBoolean(cmdupdate.ExecuteNonQuery());
                 if (retorno == true)
                 {
-                    MessageBox.Show("Datos actualizados correctamente", "Completado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Registro eliminado correctamente", "Completado", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 }
                 else
                 {
-                    MessageBox.Show("Datos no actualizados", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Registro no eliminado", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                 }
                 return retorno;
@@ -164,12 +233,13 @@ namespace SistemaGestionProductos.modelo
         }
 
 
-
         public static DataTable MostrarRegistros()
         {
             DataTable data;
             try
             {
+
+
                 SqlCommand cmd = new SqlCommand("GetUsuarios", Conexion.GetConnection());
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@IdUsuario", VariablesGlobales.UsuarioID);

@@ -73,25 +73,31 @@ namespace SistemaGestionProductos.vista
                 controlador.Id_usuario = VariablesGlobales.UsuarioID;
                 bool datos = controlador.ActualizarUsuario();
 
-                if(txtUsuario.Text.Trim() != VariablesGlobales.Usuario)
+
+                if (datos == true)
                 {
-
-                    DialogResult dialog = MessageBox.Show("Ha actualizado su nombre de usuario, por cuestiones de seguridad " +
-                        "deberá iniciar sesión de nuevo", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                    if (dialog == DialogResult.OK)
+                    if (txtUsuario.Text.Trim() != VariablesGlobales.Usuario)
                     {
-                        this.Hide();
-                        FrmLogin frmLogin = new FrmLogin();
-                        frmLogin.Show();
-                    
-                    }
+                        DialogResult dialog = MessageBox.Show("Ha actualizado su nombre de usuario, por cuestiones de seguridad " +
+                            "la aplicación se reiniciará", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
+                        if (dialog == DialogResult.OK)
+                        {
+                            Application.Restart();
+
+                        }
+                    }
                 }
+
+               
+
+
             }
 
 
         }
+
+        
 
         private bool EsMayorDeEdad(DateTime fechaNacimiento)
         {

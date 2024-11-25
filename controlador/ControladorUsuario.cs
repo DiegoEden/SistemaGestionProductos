@@ -40,6 +40,11 @@ namespace SistemaGestionProductos.controlador
             return ModeloUsuarios.ActualizarPerfil(this);
         }
 
+        public bool EliminarUsuario()
+        {
+            return ModeloUsuarios.EliminarUsuario(this);
+        }
+
         public DataTable ListarUsuarios()
         {
             return ModeloUsuarios.MostrarRegistros();

@@ -145,10 +145,10 @@ CREATE PROCEDURE AgregarProducto
 END
 
 
-select * from proveedores
+/*select * from proveedores
 
 insert into usuarios values('Diego', 'Ramirez', 'Calle de la amargura', 'ede69', 'cRDtpNCeBiql5KOQsKVyrA0sAiA=', 'diego@gmail.com', '2002-12-16')
-
+*/
 
 
 CREATE PROCEDURE GetProductosList
@@ -224,4 +224,24 @@ CREATE PROCEDURE GetUsuarios
 	select Id_Usuario, Nombre, Apellido, Direccion, Usuario, Correo, Fecha_Nacimiento from usuarios
 	where Id_Usuario != @IdUsuario
 END
+
+
+exec GetUsuarios 1
+
+CREATE PROCEDURE EliminarUsuario
+	@IdUsuario int
+	AS 
+	BEGIN
+	DELETE from usuarios where Id_Usuario = @IdUsuario
+END
+
+
+CREATE PROCEDURE CheckUsername
+	@Usuario varchar(50),
+	@IdUsuario int
+	AS
+	BEGIN
+	SELECT * FROM usuarios WHERE Usuario = @Usuario COLLATE SQL_Latin1_General_CP1_CS_AS AND Id_Usuario != @IdUsuario
+END
+
 

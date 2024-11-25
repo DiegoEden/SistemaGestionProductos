@@ -236,6 +236,7 @@
             this.Name = "FrmLogin";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Iniciar sesión";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmLogin_FormClosing);
             this.Load += new System.EventHandler(this.FrmLogin_Load);
             this.tlspNav.ResumeLayout(false);
             this.tlspNav.PerformLayout();

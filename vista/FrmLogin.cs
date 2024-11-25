@@ -119,5 +119,10 @@ namespace SistemaGestionProductos.vista
             btnShow.Visible = false;
             txtContrasenia.Focus();
         }
+
+        private void FrmLogin_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Application.Exit();
+        }
     }
 }

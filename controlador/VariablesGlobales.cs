@@ -17,5 +17,6 @@ namespace SistemaGestionProductos.controlador
 
         public static DateTime FechaNac { get; set; }
 
+
     }
 }
