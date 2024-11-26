@@ -59,6 +59,7 @@ namespace SistemaGestionProductos.vista
                 usuario.Usuario = txtUsuario.Text;
                 usuario.Correo = txtMail.Text;
                 usuario.Fecha_nacimiento = dtpNacimiento.Value;
+                /*comentariar mas tarde*/
                 byte[] pass = System.Text.Encoding.UTF8.GetBytes(GetPass());
                 usuario.Contra = Hash(pass);
 
@@ -76,6 +77,9 @@ namespace SistemaGestionProductos.vista
 
         private string GetPass()
         {
+            /*devuelve un string donde Se concatenan la primera y segunda letra del nombre,
+             * primera y segunda letra del apellido y el año de 
+             nacimiento del usuario creado*/
             string pass = txtNombre.Text[0].ToString() + txtNombre.Text[1].ToString()+ txtApellido.Text[0].ToString()
                 + txtApellido.Text[1].ToString() + dtpNacimiento.Value.Year.ToString();
             

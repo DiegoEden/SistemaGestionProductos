@@ -57,9 +57,13 @@ namespace SistemaGestionProductos.vista
                 producto.Stock = Convert.ToInt32(txtStock.Text);
                 producto.Id_categoria = Convert.ToInt32(cboCategorias.SelectedValue);
                 producto.Id_proveedor = Convert.ToInt32(cboProveedores.SelectedValue);
+                /*libreria para almecenaje temporal de la imagen*/
                 MemoryStream ms1 = new MemoryStream();
+                /*guarda la imagen en la memoria*/
                 picImagen.Image.Save(ms1, ImageFormat.Jpeg);
+                /*convierte a bytes la imagen de la memoria*/
                 byte[] abyte = ms1.ToArray();
+                /*agrega como argumento el byte al parametro imagen*/
                 producto.Imagen = abyte;
 
                 int datos = producto.AgregarProducto();
@@ -113,17 +117,22 @@ namespace SistemaGestionProductos.vista
             cboProveedores.SelectedValue = dgvDatos[6, posicion].Value.ToString();
             cboCategorias.SelectedValue = dgvDatos[5, posicion].Value.ToString();
 
-            if (dgvDatos[9, posicion].Value != DBNull.Value) // Asegúrate de que el índice sea correcto
+            /*seleccionar el valor de la posicion 9 de la consulta*/
+            if (dgvDatos[9, posicion].Value != DBNull.Value)
             {
+                /*se selecciona el valor de la imgen*/
                 byte[] imageBytes = (byte[])dgvDatos[10, posicion].Value;
 
+                /*almacena el byte y lo convierte en la memoria*/
                 using (MemoryStream ms = new MemoryStream(imageBytes))
                 {
+                    /*asigna la imagen al picturebox*/
                     picImagen.Image = Image.FromStream(ms);
                 }
             }
             else
             {
+                /*deja imagen null si esta no existe*/
                 picImagen.Image = null;
             }
 
@@ -233,6 +242,8 @@ namespace SistemaGestionProductos.vista
             }
         }
 
+        /*abre una ventana para elegir la imagen del producto a ingresar*/
+        /*validar para que sea una img*/
         private void btnExaminar_Click(object sender, EventArgs e)
         {
             try
