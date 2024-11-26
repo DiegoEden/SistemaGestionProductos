@@ -21,16 +21,18 @@ namespace SistemaGestionProductos.vista
         public FrmProductos()
         {
             InitializeComponent();
+            //asigna los metodos para mostrar los proveedores existentes en combobox
             cboProveedores.DataSource = producto.ListarProveedores();
             cboProveedores.ValueMember = "Id_Proveedor";
             cboProveedores.DisplayMember = "Empresa";
 
-
+            //asigna los metodos para mostrar las categorias existentes en combobox
             cboCategorias.DataSource = producto.ListarCategorias();
             cboCategorias.ValueMember = "Id_Categoria";
             cboCategorias.DisplayMember = "Nombre_Categoria";
             mostrarDatos();
 
+            //ocultando columnas
             this.dgvDatos.Columns[0].Visible = false;
             this.dgvDatos.Columns[5].Visible = false;
             this.dgvDatos.Columns[6].Visible = false;
@@ -42,6 +44,7 @@ namespace SistemaGestionProductos.vista
 
         private void btnIngresar_Click(object sender, EventArgs e)
         {
+            //se vertifica que los campos del formulario no estén vacíos
             if (txtNombre.Text.Trim() == "" || txtDesc.Text.Trim() == "" ||
                 txtPrecio.Text.Trim() == "" || txtStock.Text.Trim() == "" || cboCategorias.SelectedIndex == 0 ||
                 cboProveedores.SelectedIndex == 0 || picImagen.Image ==null)
@@ -51,6 +54,7 @@ namespace SistemaGestionProductos.vista
             }
             else
             {
+                //se le asignan a los atributos los valores del formulario
                 producto.Nombre = txtNombre.Text;
                 producto.Descripcion = txtDesc.Text;
                 producto.Precio = (decimal)Convert.ToSingle(txtPrecio.Text);
@@ -63,16 +67,19 @@ namespace SistemaGestionProductos.vista
                 picImagen.Image.Save(ms1, ImageFormat.Jpeg);
                 /*convierte a bytes la imagen de la memoria*/
                 byte[] abyte = ms1.ToArray();
-                /*agrega como argumento el byte al parametro imagen*/
+                /*agrega como argumento el byte al atributo imagen*/
                 producto.Imagen = abyte;
 
-                int datos = producto.AgregarProducto();
+                //se asignan los atributos y se ejecuta el metodo para insertar datos
 
+                int datos = producto.AgregarProducto();
+                //limpia los campos y actualiza el datagridview
                 NuevoRegistro();
             }
            
         }
 
+        //metodo que establece la fuente de datos del datagridview
         private void mostrarDatos()
         {
             dgvDatos.DataSource = producto.ListarProductos();
@@ -80,6 +87,7 @@ namespace SistemaGestionProductos.vista
 
         }
 
+        //metodo que vacía los textbox y actualiza los datos del datagridview
         private void NuevoRegistro()
         {
             txtDesc.Clear();
@@ -88,8 +96,8 @@ namespace SistemaGestionProductos.vista
             txtNombre.Focus();
             txtPrecio.Clear();
             txtStock.Clear();
-            cboProveedores.SelectedIndex = 0;
-            cboCategorias.SelectedIndex = 0;
+            cboProveedores.SelectedValue = 0;
+            cboCategorias.SelectedValue = 0;
             mostrarDatos();
             btnActualizar.Enabled = false;
             btnEliminar.Enabled = false;
@@ -101,11 +109,13 @@ namespace SistemaGestionProductos.vista
 
         }
 
+        //limpia los campos
         private void btnNuevo_Click(object sender, EventArgs e)
         {
             NuevoRegistro();
         }
 
+        //asigna los valores del registro selccionado a los textbox y la imagen al picturebox
         private void dgvDatos_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             int posicion = this.dgvDatos.CurrentRow.Index;
@@ -117,8 +127,8 @@ namespace SistemaGestionProductos.vista
             cboProveedores.SelectedValue = dgvDatos[6, posicion].Value.ToString();
             cboCategorias.SelectedValue = dgvDatos[5, posicion].Value.ToString();
 
-            /*seleccionar el valor de la posicion 9 de la consulta*/
-            if (dgvDatos[9, posicion].Value != DBNull.Value)
+            /*seleccionar el valor de la posicion 10 de la consulta*/
+            if (dgvDatos[10, posicion].Value != DBNull.Value)
             {
                 /*se selecciona el valor de la imgen*/
                 byte[] imageBytes = (byte[])dgvDatos[10, posicion].Value;
@@ -146,19 +156,28 @@ namespace SistemaGestionProductos.vista
 
             if (txtBuscar.Text != "")
             {
+                // Elimina la selección actual en el DataGridView
                 dgvDatos.CurrentCell = null;
+
+                // Oculta todas las filas del DataGridView inicialmente
                 foreach (DataGridViewRow r in dgvDatos.Rows)
                 {
                     r.Visible = false;
                 }
+
+                // Recorre todas las filas del DataGridView
                 foreach (DataGridViewRow r in dgvDatos.Rows)
                 {
+                    // Recorre todas las celdas de la fila
                     foreach (DataGridViewCell c in r.Cells)
                     {
-                        if ((c.Value.ToString().ToUpper()).IndexOf(txtBuscar.Text.ToUpper()) == 0)
+                        // Compara el valor de la celda con el texto de búsqueda, sin importar mayúsculas o minúsculas
+                        //compara los valores de toda la cadena de texto con el registro de cada celda
+                        if ((c.Value.ToString().ToUpper()).IndexOf(txtBuscar.Text.ToUpper()) >= 0)
                         {
+                            // Si encuentra una coincidencia, hace visible la fila
                             r.Visible = true;
-                            break;
+                            break; // Sale del ciclo al encontrar el registro buscado
                         }
                     }
                 }
@@ -171,6 +190,7 @@ namespace SistemaGestionProductos.vista
 
         private void btnActualizar_Click(object sender, EventArgs e)
         {
+            //se vertifica que los campos del formulario no estén vacíos
             if (txtNombre.Text.Trim() == "" || txtDesc.Text.Trim() == "" ||
                 txtPrecio.Text.Trim() == "" || txtStock.Text.Trim() == "" || cboCategorias.SelectedIndex == 0 ||
                 cboProveedores.SelectedIndex == 0 || picImagen.Image == null)
@@ -180,6 +200,7 @@ namespace SistemaGestionProductos.vista
             }
             else
             {
+                //se le asignan a los atributos los valores del formulario
                 producto.Nombre = txtNombre.Text;
                 producto.Descripcion = txtDesc.Text;
                 producto.Precio = (decimal)Convert.ToSingle(txtPrecio.Text);
@@ -188,6 +209,7 @@ namespace SistemaGestionProductos.vista
                 producto.Id_proveedor = Convert.ToInt32(cboProveedores.SelectedValue);
                 producto.Id_producto =  Convert.ToInt32(txtId.Text);
 
+                //se evalua si hay o no una imagen en el picturebox
                 if (picImagen.Image != null) 
                 {
                     using (MemoryStream ms = new MemoryStream())
@@ -199,6 +221,7 @@ namespace SistemaGestionProductos.vista
                 }
                 else
                 {
+                    //si hay una imagen en el registro, la asigna 
                     producto.Imagen = producto.GetImagenExistente();
                 }
 
@@ -211,9 +234,10 @@ namespace SistemaGestionProductos.vista
 
         private void btnEliminar_Click(object sender, EventArgs e)
         {
+            //se asigna el id del registro a eliminar
             producto.Id_producto = Convert.ToInt32(txtId.Text);
             DialogResult dialaog = MessageBox.Show("¿Está seguro de eliminar el registro seleccionado?", "Eliminar registro", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-
+            //si la respuesta es si, elimina el registro seleccionado
             if (dialaog == DialogResult.Yes)
             {
                 bool datos = producto.EliminarProducto();
@@ -223,24 +247,17 @@ namespace SistemaGestionProductos.vista
 
         private void txtStock_KeyPress(object sender, KeyPressEventArgs e)
         {
-
+            //limita a 3 digitos y solo numeros
             Validaciones.SoloNumeros(e);
             Validaciones.LimiteCantidad(sender, e);
         }
 
         private void txtPrecio_KeyPress(object sender, KeyPressEventArgs e)
         {
+            //validando cantidades con decmilaes
             Validaciones.ValidarDecimales(sender, e);
         }
 
-        public Image ByteToImage(byte[] data)
-        {
-            using (MemoryStream ms = new MemoryStream(data)) {
-            
-            
-                return Image.FromStream(ms);
-            }
-        }
 
         /*abre una ventana para elegir la imagen del producto a ingresar*/
         /*validar para que sea una img*/
@@ -264,6 +281,7 @@ namespace SistemaGestionProductos.vista
 
         private void txtNombre_KeyPress(object sender, KeyPressEventArgs e)
         {
+            //validando longitud de texto y algunos caracteres
             Validaciones.ValidarTextoLargo(e);
             Validaciones.SetLongitudValores(sender, e, 50);
 
@@ -271,6 +289,7 @@ namespace SistemaGestionProductos.vista
 
         private void txtDesc_KeyPress(object sender, KeyPressEventArgs e)
         {
+            //validando longitud de texto y algunos caracteres
             Validaciones.ValidarTextoLargo(e);
         }
     }

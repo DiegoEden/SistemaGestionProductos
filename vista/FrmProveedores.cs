@@ -26,6 +26,8 @@ namespace SistemaGestionProductos.vista
             btnActualizar.Enabled = false;
             btnEliminar.Enabled = false;
         }
+
+        //metodo que establece como fuente de datos el metodo ListarProveedores
         private void mostrarDatos()
         {
             dgvDatos.DataSource = proveedor.ListarProveedores();
@@ -33,6 +35,7 @@ namespace SistemaGestionProductos.vista
 
         }
 
+        //metodo usado para limpiar los textbox para ingresar un nuevo registro 
         private void NuevoRegistro()
         {
             txtEmpresa.Clear();
@@ -49,14 +52,16 @@ namespace SistemaGestionProductos.vista
         private void btnIngresar_Click(object sender, EventArgs e)
         {
 
-            string pattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
     
-
+            //validando campos vacios
             if (txtEmpresa.Text.Trim() == "" || txtMail.Text.Trim() == "" || txtDireccion.Text.Trim() == "" ||mskTel.Text.Trim() == "")
             {
                 MessageBox.Show("Los campos son requeridos", "Campos vacíos", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
-            }else if (!Regex.IsMatch(txtMail.Text, pattern))
+            }
+            //verificando el formato del correo a ingresar
+            else if (Validaciones.ValidarCorreo(txtMail.Text) == false)
+
             {
 
                 MessageBox.Show("El formato del correo electrónico no es válido.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -64,7 +69,7 @@ namespace SistemaGestionProductos.vista
             }
             else
             {
-               
+                //asignando los valores de los textbox al constructor y ejecutando la consulta
                 proveedor.Empresa = txtEmpresa.Text;
                 proveedor.Email = txtMail.Text;
                 proveedor.Numero_telefono = mskTel.Text;
@@ -76,6 +81,7 @@ namespace SistemaGestionProductos.vista
             }
         }
 
+        //limpiando los campos para agregar otro registro 
         private void btnNuevo_Click(object sender, EventArgs e)
         {
             NuevoRegistro();
@@ -83,6 +89,7 @@ namespace SistemaGestionProductos.vista
 
         private void dgvDatos_CellClick(object sender, DataGridViewCellEventArgs e)
         {
+            //asgnando los valores de los textbox en orden a los valores de cada celda del registro seleccionado
             int posicion = this.dgvDatos.CurrentRow.Index;
             txtId.Text = dgvDatos[0, posicion].Value.ToString();
             txtEmpresa.Text = dgvDatos[1, posicion].Value.ToString();
@@ -91,7 +98,7 @@ namespace SistemaGestionProductos.vista
             mskTel.Text = dgvDatos[4, posicion].Value.ToString();
 
 
-
+            //deshabilitando botones para no ingesar valores repetidos
             btnIngresar.Enabled = false;
             btnActualizar.Enabled = true;
             btnEliminar.Enabled = true;
@@ -101,25 +108,35 @@ namespace SistemaGestionProductos.vista
         {
             if (txtBuscar.Text != "")
             {
+                // Elimina la selección actual en el DataGridView
                 dgvDatos.CurrentCell = null;
+
+                // Oculta todas las filas del DataGridView inicialmente
                 foreach (DataGridViewRow r in dgvDatos.Rows)
                 {
                     r.Visible = false;
                 }
+
+                // Recorre todas las filas del DataGridView
                 foreach (DataGridViewRow r in dgvDatos.Rows)
                 {
+                    // Recorre todas las celdas de la fila
                     foreach (DataGridViewCell c in r.Cells)
                     {
-                        if ((c.Value.ToString().ToUpper()).IndexOf(txtBuscar.Text.ToUpper()) == 0)
+                        // Compara el valor de la celda con el texto de búsqueda, sin importar mayúsculas o minúsculas
+                        //compara los valores de toda la cadena de texto con el registro de cada celda
+                        if ((c.Value.ToString().ToUpper()).IndexOf(txtBuscar.Text.ToUpper()) >= 0)
                         {
+                            // Si encuentra una coincidencia, hace visible la fila
                             r.Visible = true;
-                            break;
+                            break; // Sale del ciclo al encontrar el registro buscado
                         }
                     }
                 }
             }
             else
             {
+                //cargando todo la tabla de proveedores
                 dgvDatos.DataSource = proveedor.ListarProveedores();
             }
         }
@@ -127,12 +144,13 @@ namespace SistemaGestionProductos.vista
         private void btnActualizar_Click(object sender, EventArgs e)
         {
 
-
+            //validando campos vacios
             if (txtEmpresa.Text.Trim() == "" || txtMail.Text.Trim() == "" || txtDireccion.Text.Trim() == "" || mskTel.Text.Trim() == "")
             {
                 MessageBox.Show("Los campos son requeridos", "Campos vacíos", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
             }
+            //verificando el formato del correo a ingresar
             else if (Validaciones.ValidarCorreo(txtMail.Text) == false)
             {
 
@@ -142,6 +160,7 @@ namespace SistemaGestionProductos.vista
             else
             {
 
+                //asignando los valores de los textbox al constructor y ejecutando la consulta
                 proveedor.Empresa = txtEmpresa.Text;
                 proveedor.Email = txtMail.Text;
                 proveedor.Numero_telefono = mskTel.Text;
@@ -156,9 +175,11 @@ namespace SistemaGestionProductos.vista
 
         private void btnEliminar_Click(object sender, EventArgs e)
         {
+            //se asigna el id del registro a eliminar
             proveedor.Id_proveedor = Convert.ToInt32(txtId.Text);
             DialogResult dialaog = MessageBox.Show("¿Está seguro de eliminar el registro seleccionado?", "Eliminar registro", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
+            //si la respuesta es si, elimina el registro seleccionado
             if (dialaog == DialogResult.Yes)
             {
                 bool datos = proveedor.ActualizarProveedor();
@@ -171,6 +192,7 @@ namespace SistemaGestionProductos.vista
 
         }
 
+        /*inicio de validaciones con eventos de longitud y tipo de dato a ingrear*/
         private void txtEmpresa_KeyPress(object sender, KeyPressEventArgs e)
         {
             Validaciones.ValidarTextoLargo(e);
@@ -188,5 +210,6 @@ namespace SistemaGestionProductos.vista
             Validaciones.SetLongitudValores(sender, e, 50);
 
         }
+        /*fin de validacion de eventos*/
     }
 }

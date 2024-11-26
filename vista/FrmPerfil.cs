@@ -25,10 +25,12 @@ namespace SistemaGestionProductos.vista
         private void FrmPerfil_Load(object sender, EventArgs e)
         {
 
+            //llamando el metodo GetInfo
             GetInfo();
         }
 
 
+        //metodo para obtener la información de las variables de sesion y asignarlas a los textbox
         private void GetInfo()
         {
             txtApellido.Text = VariablesGlobales.Apellido;
@@ -43,7 +45,7 @@ namespace SistemaGestionProductos.vista
 
         private void btnGuardar_Click(object sender, EventArgs e)
         {
-
+            //validando que no existan valores nulos o vacios
             if (string.IsNullOrWhiteSpace(txtNombre.Text) ||
                 string.IsNullOrWhiteSpace(txtApellido.Text) ||
                 string.IsNullOrWhiteSpace(txtDireccion.Text) ||
@@ -52,18 +54,21 @@ namespace SistemaGestionProductos.vista
             {
                 MessageBox.Show("Todos los campos deben estar llenos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            //validando el correo electróncico
             else if (Validaciones.ValidarCorreo(txtMail.Text) == false)
             {
 
                 MessageBox.Show("El formato del correo electrónico no es válido.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 txtMail.Focus();
             }
+            //validando que la fecha de nacimiento concuerde con la mayoria de edad
             else if (!Validaciones.EsMayorDeEdad(dtpNacimiento.Value))
             {
                 MessageBox.Show("El usuario debe ser mayor de 18 años.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             else
             {
+                //si todo está correcto, asgina los valores del textbox a los atributos del controlador
                 controlador.Nombre = txtNombre.Text.Trim();
                 controlador.Apellido = txtApellido.Text.Trim();
                 controlador.Direccion = txtDireccion.Text.Trim();
@@ -76,6 +81,7 @@ namespace SistemaGestionProductos.vista
 
                 if (datos == true)
                 {
+                    //si ha cambiado el nombre de usuario, se reinicia el sistema para volver a iniciar sesión
                     if (txtUsuario.Text.Trim() != VariablesGlobales.Usuario)
                     {
                         DialogResult dialog = MessageBox.Show("Ha actualizado su nombre de usuario, por cuestiones de seguridad " +
@@ -88,6 +94,7 @@ namespace SistemaGestionProductos.vista
                         }
                     }
 
+                    //se vuelven a asignar los valores, por si se han cambiado
                     VariablesGlobales.Apellido = txtApellido.Text ;
                     VariablesGlobales.Nombre = txtNombre.Text ;
                     VariablesGlobales.Correo = txtMail.Text;
@@ -113,7 +120,7 @@ namespace SistemaGestionProductos.vista
 
         private void txtUsuario_KeyPress(object sender, KeyPressEventArgs e)
         {
-
+            //validando ingreso de datos y longitud
             Validaciones.ValidarUsername(e);
             Validaciones.SetLongitudValores(sender, e, 50);
 
@@ -121,6 +128,7 @@ namespace SistemaGestionProductos.vista
 
         private void txtNombre_KeyPress(object sender, KeyPressEventArgs e)
         {
+            //validando ingreso de datos y longitud
             Validaciones.SoloLetras(e);
             Validaciones.SetLongitudValores(sender, e, 50);
 
@@ -128,6 +136,7 @@ namespace SistemaGestionProductos.vista
 
         private void txtApellido_KeyPress(object sender, KeyPressEventArgs e)
         {
+            //validando ingreso de datos y longitud
             Validaciones.SoloLetras(e);
             Validaciones.SetLongitudValores(sender, e, 50);
 
@@ -135,6 +144,7 @@ namespace SistemaGestionProductos.vista
 
         private void txtDireccion_KeyPress(object sender, KeyPressEventArgs e)
         {
+            //validando ingreso de datos y longitud
             Validaciones.ValidarTextoLargo(e);
             Validaciones.SetLongitudValores(sender, e, 255);
 

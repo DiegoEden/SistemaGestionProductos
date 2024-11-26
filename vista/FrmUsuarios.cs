@@ -31,7 +31,7 @@ namespace SistemaGestionProductos.vista
 
         private void btnIngresar_Click(object sender, EventArgs e)
         {
-
+            //validando datos vacios o espacios en blanco 
             if (string.IsNullOrWhiteSpace(txtNombre.Text) ||
               string.IsNullOrWhiteSpace(txtApellido.Text) ||
               string.IsNullOrWhiteSpace(txtDireccion.Text) ||
@@ -40,12 +40,14 @@ namespace SistemaGestionProductos.vista
             {
                 MessageBox.Show("Todos los campos deben estar llenos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            //validando el formato del correo electronico
             else if (Validaciones.ValidarCorreo(txtMail.Text) == false)
             {
 
                 MessageBox.Show("El formato del correo electrónico no es válido.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 txtMail.Focus();
             }
+            //validando la mayoria de edad
             else if (!Validaciones.EsMayorDeEdad(dtpNacimiento.Value))
             {
                 MessageBox.Show("El usuario debe ser mayor de 18 años.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -53,19 +55,22 @@ namespace SistemaGestionProductos.vista
             else
             {
 
+                //asignando los valores de los textbox al constructor
                 usuario.Nombre = txtNombre.Text;
                 usuario.Apellido = txtApellido.Text;
                 usuario.Direccion = txtDireccion.Text;
                 usuario.Usuario = txtUsuario.Text;
                 usuario.Correo = txtMail.Text;
                 usuario.Fecha_nacimiento = dtpNacimiento.Value;
-                /*comentariar mas tarde*/
+                /*se convierte en byte el valor retornado por el método GetPass*/
                 byte[] pass = System.Text.Encoding.UTF8.GetBytes(GetPass());
+                /*se asigna el valor de la contraseña convirtiendo el byte en una contraseña cifrada con el metodo Hash*/
                 usuario.Contra = Hash(pass);
 
                 int datos =  usuario.AgregarUsuario();
                 if(datos == 2)
                 {
+                    /*se le notifica del nombre de usuario del usuario creado y de la contraseña del mismo*/
                     MessageBox.Show("El nombre de usuario es " +
                     txtUsuario.Text + " y la contraseña es " + GetPass(), "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
@@ -87,6 +92,7 @@ namespace SistemaGestionProductos.vista
 
         }
 
+        //metodo que limpia todos los textbox para una nueva inserción
         private void NuevoRegistro()
         {
             txtNombre.Focus();
@@ -103,6 +109,7 @@ namespace SistemaGestionProductos.vista
             mostrarDatos();
         }
 
+        //metodo que devuelve el byte de la contraseña sin cifrar convertido en una contraseña cifrada
         string Hash(byte[] val)
         {
             using (SHA1Managed sha1 = new SHA1Managed())
@@ -112,13 +119,15 @@ namespace SistemaGestionProductos.vista
             }
         }
 
+        //metodo que asigna la fuente de datos al datagridview
         private void mostrarDatos()
         {
             dgvDatos.DataSource = usuario.ListarUsuarios();
 
 
         }
- 
+
+        //asigna los valores del registro selccionado a los textbox
         private void dgvDatos_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             int posicion = this.dgvDatos.CurrentRow.Index;
@@ -137,7 +146,7 @@ namespace SistemaGestionProductos.vista
 
         private void btnActualizar_Click(object sender, EventArgs e)
         {
-
+            //validando datos vacios o espacios en blanco 
             if (string.IsNullOrWhiteSpace(txtNombre.Text) ||
               string.IsNullOrWhiteSpace(txtApellido.Text) ||
               string.IsNullOrWhiteSpace(txtDireccion.Text) ||
@@ -146,19 +155,21 @@ namespace SistemaGestionProductos.vista
             {
                 MessageBox.Show("Todos los campos deben estar llenos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            //validando el formato del correo electronico
             else if (Validaciones.ValidarCorreo(txtMail.Text) == false)
             {
 
                 MessageBox.Show("El formato del correo electrónico no es válido.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 txtMail.Focus();
             }
+            //validando mayoria de edad
             else if (!Validaciones.EsMayorDeEdad(dtpNacimiento.Value))
             {
                 MessageBox.Show("El usuario debe ser mayor de 18 años.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             else
             {
-
+                //asignando los valores de los textbox al constructor
                 usuario.Nombre = txtNombre.Text;
                 usuario.Apellido = txtApellido.Text;
                 usuario.Direccion = txtDireccion.Text;
@@ -167,6 +178,7 @@ namespace SistemaGestionProductos.vista
                 usuario.Fecha_nacimiento = dtpNacimiento.Value;
                 usuario.Id_usuario = Convert.ToInt32(txtId.Text);
 
+                //ejecutando el metodo para actualizar el dato
                 bool datos = usuario.ActualizarUsuario();
                 if(datos == true)
                 {
@@ -180,9 +192,11 @@ namespace SistemaGestionProductos.vista
 
         private void btnEliminar_Click(object sender, EventArgs e)
         {
+            //se asigna el id del registro a eliminar
             usuario.Id_usuario = Convert.ToInt32(txtId.Text);
             DialogResult dialaog = MessageBox.Show("¿Está seguro de eliminar el registro seleccionado?", "Eliminar registro", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
+            //si la respuesta es si, elimina el registro seleccionado
             if (dialaog == DialogResult.Yes)
             {
                 bool datos = usuario.EliminarUsuario();
@@ -190,6 +204,7 @@ namespace SistemaGestionProductos.vista
             }
         }
 
+        //limpia todos los campos para agregar un nuevo registro 
         private void btnNuevo_Click(object sender, EventArgs e)
         {
             NuevoRegistro();
@@ -199,19 +214,28 @@ namespace SistemaGestionProductos.vista
         {
             if (txtBuscar.Text != "")
             {
+                // Elimina la selección actual en el DataGridView
                 dgvDatos.CurrentCell = null;
+
+                // Oculta todas las filas del DataGridView inicialmente
                 foreach (DataGridViewRow r in dgvDatos.Rows)
                 {
                     r.Visible = false;
                 }
+
+                // Recorre todas las filas del DataGridView
                 foreach (DataGridViewRow r in dgvDatos.Rows)
                 {
+                    // Recorre todas las celdas de la fila
                     foreach (DataGridViewCell c in r.Cells)
                     {
-                        if ((c.Value.ToString().ToUpper()).IndexOf(txtBuscar.Text.ToUpper()) == 0)
+                        // Compara el valor de la celda con el texto de búsqueda, sin importar mayúsculas o minúsculas
+                        //compara los valores de toda la cadena de texto con el registro de cada celda
+                        if ((c.Value.ToString().ToUpper()).IndexOf(txtBuscar.Text.ToUpper()) >= 0)
                         {
+                            // Si encuentra una coincidencia, hace visible la fila
                             r.Visible = true;
-                            break;
+                            break; // Sale del ciclo al encontrar el registro buscado
                         }
                     }
                 }
@@ -222,6 +246,7 @@ namespace SistemaGestionProductos.vista
             }
         }
 
+        /*inicio validaciones de eventos para longitud de datos y tipo de dato ingresado*/
         private void txtNombre_KeyPress(object sender, KeyPressEventArgs e)
         {
             Validaciones.SoloLetras(e);
@@ -255,5 +280,7 @@ namespace SistemaGestionProductos.vista
             Validaciones.SetLongitudValores(sender, e, 50);
 
         }
+
+        /*FIn de validaciones*/
     }
 }
