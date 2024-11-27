@@ -335,7 +335,7 @@
             this.picImagen.BackColor = System.Drawing.Color.White;
             this.picImagen.Location = new System.Drawing.Point(992, 35);
             this.picImagen.Name = "picImagen";
-            this.picImagen.Size = new System.Drawing.Size(187, 169);
+            this.picImagen.Size = new System.Drawing.Size(196, 189);
             this.picImagen.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.picImagen.TabIndex = 25;
             this.picImagen.TabStop = false;
@@ -347,9 +347,9 @@
             this.btnExaminar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnExaminar.Font = new System.Drawing.Font("Century Gothic", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnExaminar.ForeColor = System.Drawing.Color.White;
-            this.btnExaminar.Location = new System.Drawing.Point(992, 221);
+            this.btnExaminar.Location = new System.Drawing.Point(992, 244);
             this.btnExaminar.Name = "btnExaminar";
-            this.btnExaminar.Size = new System.Drawing.Size(187, 51);
+            this.btnExaminar.Size = new System.Drawing.Size(196, 37);
             this.btnExaminar.TabIndex = 8;
             this.btnExaminar.Text = "Examinar";
             this.btnExaminar.UseVisualStyleBackColor = false;

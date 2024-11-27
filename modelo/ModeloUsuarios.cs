@@ -93,7 +93,7 @@ namespace SistemaGestionProductos.modelo
             try
             {
                 // Verificar si el nombre de usuario ya existe en la base de datos.
-                SqlCommand check = new SqlCommand("CheckUsername", Conexion.GetConnection());
+                SqlCommand check = new SqlCommand("CheckNewUsername", Conexion.GetConnection());
                 check.CommandType = CommandType.StoredProcedure;
                 check.Parameters.AddWithValue("@Usuario", add.Usuario);
                 retorno = Convert.ToInt32(check.ExecuteScalar());

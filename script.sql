@@ -131,6 +131,10 @@ alter table Productos add Id_Usuario int;
 alter table Productos 
 add foreign key(Id_Usuario) references usuarios(Id_Usuario);
 
+--Campo imagen para productos
+
+alter table Productos add Imagen image
+
 -- Procedimiento almacenado para agregar un producto
 CREATE PROCEDURE AgregarProducto
     @NombreProducto varchar(50),
@@ -246,4 +250,13 @@ BEGIN
     SELECT * FROM usuarios 
     WHERE Usuario = @Usuario COLLATE SQL_Latin1_General_CP1_CS_AS 
     AND Id_Usuario != @IdUsuario
+END;
+
+--validar antes de crear un usuario si el nombre de usuario ya existe
+CREATE PROCEDURE CheckNewUsername
+   @Usuario varchar(50)
+AS
+BEGIN
+    SELECT * FROM usuarios 
+    WHERE Usuario = @Usuario COLLATE SQL_Latin1_General_CP1_CS_AS 
 END;

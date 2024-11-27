@@ -131,10 +131,18 @@ namespace SistemaGestionProductos.vista
           
         }
 
+        private void setCurrentForm(Button currentform) {
+
+            currentform.BackColor = Color.FromArgb(166, 87, 217);
+           
+        }
+
         //abrirendo los formularios
         private void btnProductos_Click(object sender, EventArgs e)
         {
             AbrirFormulario<FrmProductos>();
+           
+
         }
 
         private void btnCategorias_Click(object sender, EventArgs e)

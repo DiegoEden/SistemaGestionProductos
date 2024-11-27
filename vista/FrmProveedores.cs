@@ -182,7 +182,7 @@ namespace SistemaGestionProductos.vista
             //si la respuesta es si, elimina el registro seleccionado
             if (dialaog == DialogResult.Yes)
             {
-                bool datos = proveedor.ActualizarProveedor();
+                bool datos = proveedor.EliminarProveedor();
                 NuevoRegistro();
             }
         }
